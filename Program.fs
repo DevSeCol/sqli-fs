@@ -64,7 +64,7 @@ if not (File.Exists(fileName)) then
     use fileDict = new StreamWriter(fileName)
     client.GetAsync(Uri url).Result.Content.ReadAsStream()
     |> streamToSeq
-    |> Seq.iter (fun line -> fileDict.WriteLine(line))
+    |> Seq.iter fileDict.WriteLine
 
 // List the tables in the database matching dictionary words
 printfn "Tables found:"
