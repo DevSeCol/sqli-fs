@@ -61,11 +61,10 @@ let fileName = DICT_URL.Split("/").[^0]
 // Download the dictionary file if it doesn't exist yet
 if not (File.Exists(fileName)) then
     let url = $"{DICT_URL}"
-    use stream = client.GetAsync(Uri url).Result.Content.ReadAsStream()
     use fileDict = new StreamWriter(fileName)
-    streamToSeq stream
+    client.GetAsync(Uri url).Result.Content.ReadAsStream()
+    |> streamToSeq
     |> Seq.iter (fun line -> fileDict.WriteLine(line))
-    printfn "%s downloaded" fileName
 
 // List the tables in the database matching dictionary words
 printfn "Tables found:"
